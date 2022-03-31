@@ -1,10 +1,9 @@
 <script>
-  import Game from './components/Game.svelte'
-  let const3 = 0
+  import Game from "./components/Game.svelte";
 </script>
 
 <div>
-  <Game/>
+  <Game />
 </div>
 
 <style>

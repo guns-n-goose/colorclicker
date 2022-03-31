@@ -1,9 +1,9 @@
 <script>
-  import Game from "./components/Game.svelte";
+  import Colorclicker from "./components/Colorclicker.svelte";
 </script>
 
 <div>
-  <Game />
+  <Colorclicker />
 </div>
 
 <style>

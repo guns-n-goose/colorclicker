@@ -1,1 +1,1 @@
-# Colour Clicker Game
+# Color Clicker Game

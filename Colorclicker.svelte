@@ -138,7 +138,8 @@
 
 <style>
     #div1 {
-        position: fixed;
+        position: absolute;
+        z-index: 0;
         width: 100%;
         height: 100%;
         top: 0px;

@@ -1,6 +1,10 @@
 <script>
+    import { createEventDispatcher } from "svelte";
+    const dispatch = createEventDispatcher();
     let score = 0;
+    let winScore = 0;
     let winningColor = "red";
+    let winningColorText = "red";
     let buttonColor = [];
 
     let colorList = [
@@ -14,8 +18,10 @@
         "gray",
     ];
 
-    function setColor() {
+    function setColors() {
         winningColor = colorList[Math.floor(Math.random() * colorList.length)];
+        winningColorText =
+            colorList[Math.floor(Math.random() * colorList.length)];
         let availableColors = colorList.slice();
         for (let i = 0; i < 8; i++) {
             let randNumber = Math.floor(Math.random() * availableColors.length);
@@ -26,14 +32,22 @@
     function checkWin(clickedColor) {
         if (clickedColor == winningColor) {
             score += 1;
-            setColor();
+            winScore += 1;
+            if (winScore >= 5) {
+                alert("you have won 10 Coins!!!");
+                dispatch("win", { amount: 10 });
+                winScore = 0;
+            }
+            setColors();
         } else {
             alert("wrong color, you lost :(");
+            dispatch("lose", { amount: 5 });
             score = 0;
-            setColor();
+            winScore = 0;
+            setColors();
         }
     }
-    setColor();
+    setColors();
 </script>
 
 <div id="div1" class="grid bg-white">
@@ -45,7 +59,7 @@
                 class="font-sans font-bold text-3xl pb-4 text-gray-400 text-center capitalize"
             >
                 Click on <span class="text-{winningColor}-500">
-                    {winningColor}
+                    {winningColorText}
                 </span>
             </p>
             <p class="font-sans text-lg font-bold text-gray-400 text-center">

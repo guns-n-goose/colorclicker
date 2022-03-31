@@ -3,9 +3,10 @@
     const dispatch = createEventDispatcher();
     let score = 0;
     let winScore = 0;
+    let winCoins = 0;
     let winningColor = "red";
     let winningColorText = "red";
-    let buttonColor = [];
+    let buttonColorArray = [];
 
     let colorList = [
         "orange",
@@ -19,13 +20,18 @@
     ];
 
     function setColors() {
-        winningColor = colorList[Math.floor(Math.random() * colorList.length)];
-        winningColorText =
-            colorList[Math.floor(Math.random() * colorList.length)];
         let availableColors = colorList.slice();
+
+        let randWinCol = Math.floor(Math.random() * availableColors.length);
+        winningColor = availableColors[randWinCol];
+        availableColors.splice(randWinCol, 1); // remove color from array -> text and color not same
+        winningColorText =
+            availableColors[Math.floor(Math.random() * availableColors.length)];
+
+        availableColors = colorList.slice(); // reset available colors
         for (let i = 0; i < 8; i++) {
             let randNumber = Math.floor(Math.random() * availableColors.length);
-            buttonColor[i] = availableColors[randNumber];
+            buttonColorArray[i] = availableColors[randNumber];
             availableColors.splice(randNumber, 1);
         }
     }
@@ -34,14 +40,15 @@
             score += 1;
             winScore += 1;
             if (winScore >= 5) {
-                alert("you have won 10 Coins!!!");
                 dispatch("win", { amount: 10 });
+                winCoins += 10;
                 winScore = 0;
             }
             setColors();
         } else {
-            alert("wrong color, you lost :(");
+            alert("wrong color, you lost 5 coins :(");
             dispatch("lose", { amount: 5 });
+            winCoins -= 5;
             score = 0;
             winScore = 0;
             setColors();
@@ -54,7 +61,7 @@
     <div
         class="w-1/3 place-self-center p-8 rounded-xl overflow-hidden shadow-2xl bg-gradient-to-r grid from-teal-400 to-blue-700"
     >
-        <div class="bg-white rounded-2xl mx-20 mb-8 py-8">
+        <div class="bg-white rounded-2xl mx-16 mb-8 py-8">
             <p
                 class="font-sans font-bold text-3xl pb-4 text-gray-400 text-center capitalize"
             >
@@ -62,59 +69,68 @@
                     {winningColorText}
                 </span>
             </p>
-            <p class="font-sans text-lg font-bold text-gray-400 text-center">
-                Score: {score}
-            </p>
+            <div class="grid grid-cols-2 gap-4 ">
+                <p
+                    class="font-sans text-lg font-bold text-gray-400 text-center"
+                >
+                    Score: {score}
+                </p>
+                <p
+                    class="font-sans text-lg font-bold text-gray-400 text-center"
+                >
+                    Coins: {winCoins}
+                </p>
+            </div>
         </div>
 
         <div class="grid grid-cols-2 gap-4 ">
             <button
-                class="bg-{buttonColor[0]}-500 hover:bg-{buttonColor[0]}-700 text-white font-bold py-2 px-4 rounded-md"
-                on:click={() => checkWin(buttonColor[0])}
+                class="bg-{buttonColorArray[0]}-500 hover:bg-{buttonColorArray[0]}-700 text-white font-bold py-2 px-4 rounded-md"
+                on:click={() => checkWin(buttonColorArray[0])}
             >
-                {buttonColor[0]}
+                {buttonColorArray[0]}
             </button>
             <button
-                class="bg-{buttonColor[1]}-500 hover:bg-{buttonColor[1]}-700 text-white font-bold py-2 px-4 rounded-md"
-                on:click={() => checkWin(buttonColor[1])}
+                class="bg-{buttonColorArray[1]}-500 hover:bg-{buttonColorArray[1]}-700 text-white font-bold py-2 px-4 rounded-md"
+                on:click={() => checkWin(buttonColorArray[1])}
             >
-                {buttonColor[1]}
+                {buttonColorArray[1]}
             </button>
             <button
-                class="bg-{buttonColor[2]}-500 hover:bg-{buttonColor[2]}-700 text-white font-bold py-2 px-4 rounded-md"
-                on:click={() => checkWin(buttonColor[2])}
+                class="bg-{buttonColorArray[2]}-500 hover:bg-{buttonColorArray[2]}-700 text-white font-bold py-2 px-4 rounded-md"
+                on:click={() => checkWin(buttonColorArray[2])}
             >
-                {buttonColor[2]}
+                {buttonColorArray[2]}
             </button>
             <button
-                class="bg-{buttonColor[3]}-500 hover:bg-{buttonColor[3]}-700 text-white font-bold py-2 px-4 rounded-md"
-                on:click={() => checkWin(buttonColor[3])}
+                class="bg-{buttonColorArray[3]}-500 hover:bg-{buttonColorArray[3]}-700 text-white font-bold py-2 px-4 rounded-md"
+                on:click={() => checkWin(buttonColorArray[3])}
             >
-                {buttonColor[3]}
+                {buttonColorArray[3]}
             </button>
             <button
-                class="bg-{buttonColor[4]}-500 hover:bg-{buttonColor[4]}-700 text-white font-bold py-2 px-4 rounded-md"
-                on:click={() => checkWin(buttonColor[4])}
+                class="bg-{buttonColorArray[4]}-500 hover:bg-{buttonColorArray[4]}-700 text-white font-bold py-2 px-4 rounded-md"
+                on:click={() => checkWin(buttonColorArray[4])}
             >
-                {buttonColor[4]}
+                {buttonColorArray[4]}
             </button>
             <button
-                class="bg-{buttonColor[5]}-500 hover:bg-{buttonColor[5]}-700 text-white font-bold py-2 px-4 rounded-md"
-                on:click={() => checkWin(buttonColor[5])}
+                class="bg-{buttonColorArray[5]}-500 hover:bg-{buttonColorArray[5]}-700 text-white font-bold py-2 px-4 rounded-md"
+                on:click={() => checkWin(buttonColorArray[5])}
             >
-                {buttonColor[5]}
+                {buttonColorArray[5]}
             </button>
             <button
-                class="bg-{buttonColor[6]}-500 hover:bg-{buttonColor[6]}-700 text-white font-bold py-2 px-4 rounded-md"
-                on:click={() => checkWin(buttonColor[6])}
+                class="bg-{buttonColorArray[6]}-500 hover:bg-{buttonColorArray[6]}-700 text-white font-bold py-2 px-4 rounded-md"
+                on:click={() => checkWin(buttonColorArray[6])}
             >
-                {buttonColor[6]}
+                {buttonColorArray[6]}
             </button>
             <button
-                class="bg-{buttonColor[7]}-500 hover:bg-{buttonColor[7]}-700 text-white font-bold py-2 px-4 rounded-md"
-                on:click={() => checkWin(buttonColor[7])}
+                class="bg-{buttonColorArray[7]}-500 hover:bg-{buttonColorArray[7]}-700 text-white font-bold py-2 px-4 rounded-md"
+                on:click={() => checkWin(buttonColorArray[7])}
             >
-                {buttonColor[7]}
+                {buttonColorArray[7]}
             </button>
         </div>
     </div>

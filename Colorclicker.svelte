@@ -57,6 +57,10 @@
     setColors();
 </script>
 
+<svelte:head>
+    <title>Color Clicker</title>
+</svelte:head>
+
 <div id="div1" class="grid">
     <div
         class="w-1/3 place-self-center p-8 rounded-xl overflow-hidden shadow-2xl bg-gradient-to-r grid from-teal-400 to-blue-700"
@@ -139,6 +143,7 @@
 <style>
     #div1 {
         position: absolute;
+
         width: 100%;
         height: 100%;
         top: 0px;
